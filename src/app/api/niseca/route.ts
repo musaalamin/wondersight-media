@@ -2,14 +2,16 @@ import { HfInference } from '@huggingface/inference';
 import { NextResponse } from 'next/server';
 import { getWeatherData } from '../../../lib/weather';
 
-const hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
-
-export async function POST(req: Request) {
-  try {
-    const formData = await req.formData();
-    const image = formData.get('image') as File;
-    const lat = parseFloat(formData.get('lat') as string);
-    const lon = parseFloat(formData.get('lon') as string);
+// The new version of the library requires "inputs" instead of "data"
+    const [diagnosis, weather] = await Promise.all([
+      hf.imageClassification({
+        model: model,
+        inputs: buffer, // Change "data" to "inputs"
+        // @ts-ignore
+        parameters: { wait_for_model: true }, // Correct way to pass parameters
+      }),
+      (lat && lon) ? getWeatherData(lat, lon) : null
+    ]);
 
     if (!image) return NextResponse.json({ error: "No image" }, { status: 400 });
 
