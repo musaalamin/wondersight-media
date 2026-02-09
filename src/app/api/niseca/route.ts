@@ -8,26 +8,21 @@ export async function POST(req: Request) {
   try {
     const formData = await req.formData();
     const image = formData.get('image') as File;
-    const latStr = formData.get('lat') as string;
-    const lonStr = formData.get('lon') as string;
+    const lat = parseFloat(formData.get('lat') as string);
+    const lon = parseFloat(formData.get('lon') as string);
 
     if (!image) {
-      return NextResponse.json({ error: "No image uploaded" }, { status: 400 });
+      return NextResponse.json({ error: "No image" }, { status: 400 });
     }
 
-    const lat = latStr ? parseFloat(latStr) : null;
-    const lon = lonStr ? parseFloat(lonStr) : null;
-
-    const arrayBuffer = await image.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    
-    // Using a stable, always-on model
+    // We convert the image to a Blob, which Hugging Face production requires
+    const blob = new Blob([await image.arrayBuffer()], { type: image.type });
     const model = process.env.NEXT_PUBLIC_NISECA_MODEL || "microsoft/resnet-50";
 
     const [diagnosis, weather] = await Promise.all([
       hf.imageClassification({
         model: model,
-        inputs: buffer,
+        inputs: blob, // Changed from buffer to blob
         // @ts-ignore
         parameters: { wait_for_model: true },
       }),
