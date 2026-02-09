@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "title": "Livelihood Officer",
+    "org": "International Rescue Committee",
+    "loc": "Gusau, Zamfara",
+    "link": "https://rescue.org/careers",
+    "tag": "NGO"
+  },
+  {
+    "id": "2",
+    "title": "Commonwealth Master's Scholarship",
+    "org": "UK Government",
+    "loc": "United Kingdom",
+    "link": "https://cscuk.fcdo.gov.uk/scholarships/",
+    "tag": "Scholarship"
+  },
+  {
+    "id": "3",
+    "title": "Graduate Trainee Program",
+    "org": "World Bank",
+    "loc": "International",
+    "link": "https://worldbank.org/careers",
+    "tag": "International"
+  }
+]
