@@ -1,14 +1,14 @@
 'use client';
 import React, { useState } from 'react';
 import jobsData from '../../lib/jobs-data.json';
-import AdBanner from '../../components/AdBanner'; // STEP 1: ADD THIS IMPORT
+import AdBanner from '../../components/AdBanner'; 
 
 export default function JobsPage() {
   const [activeTab, setActiveTab] = useState('All');
 
   const handleApply = (realLink: string) => {
     const hasSeenAd = sessionStorage.getItem('ad_fired');
-    // STEP 2: PASTE YOUR ACTUAL ADSTERRA SMARTLINK BELOW
+    // REMEMBER: Replace this with your actual Adsterra Direct Link URL later
     const adLink = "https://your-adsterra-smartlink.com"; 
 
     if (!hasSeenAd) {
@@ -31,12 +31,10 @@ export default function JobsPage() {
         <p className="text-gray-400">High-impact opportunities in Northern Nigeria.</p>
       </header>
 
-      {/* STEP 3: THE BANNER APPEARS HERE */}
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto mb-10">
         <AdBanner />
       </div>
 
-      {/* Filter Bar */}
       <div className="max-w-4xl mx-auto flex gap-3 overflow-x-auto mb-10 pb-2">
         {['All', 'NGO', 'Agric', 'Govt', 'Creative'].map(tab => (
           <button 
