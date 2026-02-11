@@ -42,6 +42,7 @@ export default function RootLayout({
       {/* ADDED FOUNDATION LINK HERE */}
       <a href="/foundation" className="hover:text-[#E91E63] transition text-[#E91E63]">Foundation</a>
       <a href="/team" className="hover:text-gray-400 transition">Team</a>
+<a href="/daily-barakah" className="hover:text-[#75C9B7] transition">Daily Barakah</a>
     </div>
   </div>
 </nav>
