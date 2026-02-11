@@ -10,7 +10,8 @@ export default function VetPortal() {
   const [animal, setAnimal] = useState<'Poultry' | 'Fish' | ''>('');
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
 
-  const toggleSymptom = (s) => {
+  // To this (adding : string):
+const toggleSymptom = (s: string) => {
     setSelectedSymptoms(prev => prev.includes(s) ? prev.filter(i => i !== s) : [...prev, s]);
   };
 
