@@ -11,7 +11,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-xl font-bold text-white mb-4 uppercase tracking-widest">1. Introduction</h2>
             <p>
-              Welcome to **Wonder Sight Group**. We are committed to protecting your personal information and your right to privacy. This policy applies to all information collected through our website (**wondersightgroup.com**) and our services, including **NISECA AI** and the **Jobs Portal**.
+              Welcome to Wonder Sight Group. We are committed to protecting your personal information and your right to privacy. This policy applies to all information collected through our website (wondersightgroup.com) and our services, including NISECA AI and the Jobs Portal.
             </p>
           </section>
 
@@ -30,15 +30,15 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-xl font-bold text-white mb-4 uppercase tracking-widest">3. Cookies & Third-Party Ads</h2>
             <p>
-              We use third-party advertising companies to serve ads when you visit our Website. These companies (including **Google AdSense** and **Adsterra**) may use information about your visits to this and other websites that are contained in web cookies in order to provide advertisements about goods and services of interest to you.
+              We use third-party advertising companies to serve ads when you visit our Website. These companies (including Google AdSense and Adsterra) may use information about your visits to this and other websites that are contained in web cookies in order to provide advertisements about goods and services of interest to you.
             </p>
           </section>
 
           <section>
             <h2 className="text-xl font-bold text-white mb-4 uppercase tracking-widest">4. Contact Us</h2>
             <p>
-              If you have questions or comments about this policy, you may contact our Gusau headquarters at: <br />
-              <span className="text-white font-bold">Email:</span> wizkalee@gmail.com
+              If you have questions or comments about this policy, you may contact our Zamfara headquarters at: <br />
+              <span className="text-white font-bold">Email:</span> wondersightgallery@gmail.com
             </p>
           </section>
         </div>

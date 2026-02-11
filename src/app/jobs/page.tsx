@@ -7,19 +7,21 @@ export default function JobsPage() {
   const [activeTab, setActiveTab] = useState('All');
   // ... rest of your code ...
 
-  const handleApply = (realLink: string) => {
-    const hasSeenAd = sessionStorage.getItem('ad_fired');
-    // REMEMBER: Replace this with your actual Adsterra Direct Link URL later
-    const adLink = "https://www.effectivegatecpm.com/tvzhnpve?key=8f36116b749a55da6ead042c04377bb7"; 
+ const handleApply = (realLink: string) => {
+  const adLink = "https://www.effectivegatecpm.com/tvzhnpve?key=8f36116b749a55da6ead042c04377bb7"; 
 
-    if (!hasSeenAd) {
-      sessionStorage.setItem('ad_fired', 'true');
-      window.open(adLink, '_blank');
-      window.location.href = realLink;
-    } else {
-      window.location.href = realLink;
-    }
-  };
+  // 1. Open the Adsterra Smartlink in a new tab
+  const adWindow = window.open(adLink, '_blank');
+
+  // 2. If the ad was blocked by the browser, we force the redirect in the current tab first
+  if (!adWindow || adWindow.closed || typeof adWindow.closed === 'undefined') {
+    // If blocked, we show the ad in the current tab, and the user can go back to the job
+    window.location.href = adLink;
+  } else {
+    // If ad opened successfully in new tab, send current tab to the real job link
+    window.location.href = realLink;
+  }
+};
 
   const filteredJobs = activeTab === 'All' 
     ? jobsData 
