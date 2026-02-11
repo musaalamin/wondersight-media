@@ -29,20 +29,22 @@ export default function RootLayout({
       <body className={`${inter.className} bg-[#120B21] text-white antialiased`}>
         
         {/* Navigation Bar */}
-        <nav className="sticky top-0 z-50 bg-[#120B21]/80 backdrop-blur-md border-b border-white/10 px-6 py-4">
-          <div className="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="/" className="text-xl font-black bg-gradient-to-r from-[#E91E63] to-[#FF5722] bg-clip-text text-transparent">
-              WONDER SIGHT
-            </a>
-            <div className="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest">
-              <a href="/news" className="hover:text-[#FF5722] transition">News</a>
-              <a href="/niseca" className="hover:text-[#75C9B7] transition">Agric AI</a>
-              <a href="/vet" className="hover:text-[#75C9B7] transition">Vet</a>
-              <a href="/jobs" className="hover:text-[#FF5722] transition">Jobs</a>
-              <a href="/team" className="hover:text-gray-400 transition">Team</a>
-            </div>
-          </div>
-        </nav>
+       <nav className="sticky top-0 z-50 bg-[#120B21]/80 backdrop-blur-md border-b border-white/10 px-6 py-4">
+  <div className="max-w-6xl mx-auto flex justify-between items-center">
+    <a href="/" className="text-xl font-black bg-gradient-to-r from-[#E91E63] to-[#FF5722] bg-clip-text text-transparent">
+      WONDER SIGHT
+    </a>
+    <div className="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest">
+      <a href="/news" className="hover:text-[#FF5722] transition">News</a>
+      <a href="/niseca" className="hover:text-[#75C9B7] transition">Agric AI</a>
+      <a href="/vet" className="hover:text-[#75C9B7] transition">Vet</a>
+      <a href="/jobs" className="hover:text-[#FF5722] transition">Jobs</a>
+      {/* ADDED FOUNDATION LINK HERE */}
+      <a href="/foundation" className="hover:text-[#E91E63] transition text-[#E91E63]">Foundation</a>
+      <a href="/team" className="hover:text-gray-400 transition">Team</a>
+    </div>
+  </div>
+</nav>
 
         {/* Page Content */}
         <div className="min-h-screen">
