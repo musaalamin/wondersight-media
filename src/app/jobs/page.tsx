@@ -1,11 +1,11 @@
 'use client';
 import React, { useState } from 'react';
-// We use @ to tell Vercel exactly where to start looking
 import jobsData from '@/lib/jobs-data.json';
-import AdBanner from '@/components/AdBanner';
+import AdBanner from '@/components/AdBanner'; 
 
 export default function JobsPage() {
   const [activeTab, setActiveTab] = useState('All');
+  // ... rest of your code ...
 
   const handleApply = (realLink: string) => {
     const hasSeenAd = sessionStorage.getItem('ad_fired');
