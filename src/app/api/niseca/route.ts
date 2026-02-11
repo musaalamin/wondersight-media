@@ -1,6 +1,5 @@
 import { HfInference } from '@huggingface/inference';
 import { NextResponse } from 'next/server';
-import { getWeatherData } from '../../../lib/weather';
 
 const hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
 
@@ -8,32 +7,27 @@ export async function POST(req: Request) {
   try {
     const formData = await req.formData();
     const image = formData.get('image') as File;
-    const lat = parseFloat(formData.get('lat') as string);
-    const lon = parseFloat(formData.get('lon') as string);
 
-    if (!image) {
-      return NextResponse.json({ error: "No image" }, { status: 400 });
-    }
+    if (!image) return NextResponse.json({ error: "No image" }, { status: 400 });
 
-    // We convert the image to a Blob, which Hugging Face production requires
     const blob = new Blob([await image.arrayBuffer()], { type: image.type });
-    const model = process.env.NEXT_PUBLIC_NISECA_MODEL || "microsoft/resnet-50";
+    const model = process.env.NEXT_PUBLIC_NISECA_MODEL || "google/vit-base-patch16-224";
 
-    const [diagnosis, weather] = await Promise.all([
-      hf.imageClassification({
-        model: model,
-        inputs: blob, // Changed from buffer to blob
-        // @ts-ignore
-        parameters: { wait_for_model: true },
-      }),
-      (lat && lon) ? getWeatherData(lat, lon) : null
-    ]);
+    const diagnosis = await hf.imageClassification({
+      model: model,
+      inputs: blob,
+      // @ts-ignore
+      parameters: { wait_for_model: true },
+    });
 
-    return NextResponse.json({ diagnosis, weather });
+    return NextResponse.json({ diagnosis });
   } catch (error: any) {
-    console.error("NISECA_CRITICAL_ERROR:", error.message);
-    return NextResponse.json({ 
-      error: "AI server is warming up. Please try again in 30 seconds." 
-    }, { status: 503 });
+    // This helps us see the real error in Vercel Logs
+    console.error("HF_DEBUG_LOG:", error.message);
+    
+    if (error.message.includes("loading") || error.message.includes("503")) {
+       return NextResponse.json({ error: "AI is waking up. Please retry in 20 seconds." }, { status: 503 });
+    }
+    return NextResponse.json({ error: "AI Error: " + error.message }, { status: 500 });
   }
 }

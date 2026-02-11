@@ -1,23 +1,24 @@
 'use client';
 import React, { useState } from 'react';
 import jobsData from '../../lib/jobs-data.json';
+import AdBanner from '../../components/AdBanner'; // STEP 1: ADD THIS IMPORT
 
 export default function JobsPage() {
   const [activeTab, setActiveTab] = useState('All');
 
   const handleApply = (realLink: string) => {
-  // Check if ad has fired this session
-  const hasSeenAd = sessionStorage.getItem('ad_fired');
-  const adLink = "https://your-adsterra-smartlink.com"; 
+    const hasSeenAd = sessionStorage.getItem('ad_fired');
+    // STEP 2: PASTE YOUR ACTUAL ADSTERRA SMARTLINK BELOW
+    const adLink = "https://your-adsterra-smartlink.com"; 
 
-  if (!hasSeenAd) {
-    sessionStorage.setItem('ad_fired', 'true');
-    window.open(adLink, '_blank'); // Opens Adsterra in new tab
-    window.location.href = realLink; // Sends user to the real job application
-  } else {
-    window.location.href = realLink; // Second click goes straight to the job
-  }
-};
+    if (!hasSeenAd) {
+      sessionStorage.setItem('ad_fired', 'true');
+      window.open(adLink, '_blank');
+      window.location.href = realLink;
+    } else {
+      window.location.href = realLink;
+    }
+  };
 
   const filteredJobs = activeTab === 'All' 
     ? jobsData 
@@ -29,6 +30,11 @@ export default function JobsPage() {
         <h1 className="text-4xl font-black text-[#75C9B7] mb-2">Job Board</h1>
         <p className="text-gray-400">High-impact opportunities in Northern Nigeria.</p>
       </header>
+
+      {/* STEP 3: THE BANNER APPEARS HERE */}
+      <div className="max-w-4xl mx-auto">
+        <AdBanner />
+      </div>
 
       {/* Filter Bar */}
       <div className="max-w-4xl mx-auto flex gap-3 overflow-x-auto mb-10 pb-2">

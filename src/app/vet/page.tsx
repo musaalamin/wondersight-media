@@ -2,37 +2,52 @@
 import React, { useState } from 'react';
 
 export default function VetPortal() {
-  const [animal, setAnimal] = useState('poultry'); // poultry or fish
+  const [animal, setAnimal] = useState('');
+  const [file, setFile] = useState<File | null>(null);
+
+  const handleWhatsApp = () => {
+    const message = `Hello Dr. Nana, I am using the Wonder Sight Vet Portal. I have a ${animal} health issue.`;
+    window.open(`https://wa.me/2349031761998?text=${encodeURIComponent(message)}`, '_blank');
+  };
 
   return (
-    <main className="min-h-screen bg-[#120B21] text-white p-6">
-      <h1 className="text-3xl font-bold bg-gradient-to-r from-[#E91E63] to-[#FF5722] bg-clip-text text-transparent mb-6">
-        Vet Diagnostic Portal
-      </h1>
-      
-      {/* Animal Selector */}
-      <div className="flex gap-4 mb-8">
-        {['poultry', 'fish'].map((type) => (
-          <button 
-            key={type}
-            onClick={() => setAnimal(type)}
-            className={`px-6 py-2 rounded-full capitalize border ${animal === type ? 'bg-[#E91E63] border-none' : 'border-white/20'}`}
-          >
-            {type}
-          </button>
-        ))}
-      </div>
-
-      <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center">
-        <div className="mb-4 text-[#75C9B7] text-sm font-semibold uppercase tracking-widest">
-          AI {animal} Analysis
-        </div>
-        <p className="text-gray-400 mb-6">Upload a clear photo of the {animal === 'fish' ? 'gills or skin' : 'fecal matter or eye'} for instant diagnosis.</p>
+    <main className="min-h-screen bg-[#120B21] text-white p-6 py-20">
+      <div className="max-w-4xl mx-auto text-center">
+        <h1 className="text-4xl font-black text-[#75C9B7] mb-12">Vet Portal</h1>
         
-        {/* Reusing your NISECA upload component logic here */}
-        <button className="w-full py-4 bg-white/10 rounded-xl border-2 border-dashed border-white/20 hover:border-[#75C9B7] transition">
-          Take Photo / Upload
-        </button>
+        <div className="flex gap-4 justify-center mb-10">
+          {['Poultry', 'Fish'].map(type => (
+            <button 
+              key={type} 
+              onClick={() => setAnimal(type)}
+              className={`px-8 py-4 rounded-2xl border-2 transition ${animal === type ? 'border-[#E91E63] bg-[#E91E63]/10' : 'border-white/10'}`}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
+
+        {animal && (
+          <div className="space-y-6 animate-in fade-in zoom-in-95">
+            <label className="block p-10 border-2 border-dashed border-white/20 rounded-[3rem] cursor-pointer hover:border-[#75C9B7] transition">
+              <input 
+                type="file" 
+                className="hidden" 
+                onChange={(e) => setFile(e.target.files?.[0] || null)} 
+              />
+              <p className="text-gray-400">{file ? file.name : `Click to upload ${animal} photo`}</p>
+            </label>
+
+            {file && (
+              <button 
+                onClick={handleWhatsApp}
+                className="w-full py-4 bg-[#25D366] rounded-2xl font-black uppercase tracking-widest text-xs"
+              >
+                Send to Dr. Nana via WhatsApp
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </main>
   );

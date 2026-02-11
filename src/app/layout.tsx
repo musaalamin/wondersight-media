@@ -59,6 +59,7 @@ export default function RootLayout({
                 Nigeria.
               </p>
             </div>
+<a href="/privacy" className="hover:text-white transition">Privacy Policy</a>
             <div className="text-gray-500 text-[10px] uppercase tracking-tighter self-end">
               © 2026 Wonder Sight. All Rights Reserved.
             </div>
