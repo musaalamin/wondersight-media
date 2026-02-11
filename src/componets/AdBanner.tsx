@@ -2,7 +2,7 @@
 import Script from 'next/script';
 import React from 'react';
 
-export default function AdBanner() {
+export default function AdBanner() { // Make sure the function name is AdBanner 
   return (
     <div className="w-full my-8 px-4 flex flex-col items-center overflow-hidden">
       {/* Label ensures AdSense sees this as transparent advertising */}

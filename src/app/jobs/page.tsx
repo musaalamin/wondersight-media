@@ -1,7 +1,8 @@
 'use client';
 import React, { useState } from 'react';
-import jobsData from '../../lib/jobs-data.json';
-import AdBanner from '../../components/AdBanner'; 
+// We use @ to tell Vercel exactly where to start looking
+import jobsData from '@/lib/jobs-data.json';
+import AdBanner from '@/components/AdBanner';
 
 export default function JobsPage() {
   const [activeTab, setActiveTab] = useState('All');
