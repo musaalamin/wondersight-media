@@ -10,7 +10,7 @@ export default function JobsPage() {
   const handleApply = (realLink: string) => {
     const hasSeenAd = sessionStorage.getItem('ad_fired');
     // REMEMBER: Replace this with your actual Adsterra Direct Link URL later
-    const adLink = "https://your-adsterra-smartlink.com"; 
+    const adLink = "https://www.effectivegatecpm.com/tvzhnpve?key=8f36116b749a55da6ead042c04377bb7"; 
 
     if (!hasSeenAd) {
       sessionStorage.setItem('ad_fired', 'true');
