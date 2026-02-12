@@ -11,34 +11,35 @@ export default function AdSlot({ id, scriptSrc, label = "Sponsored Content" }: A
   const adRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // 1. Clear the container to avoid duplicates
     if (adRef.current) {
       adRef.current.innerHTML = '';
-      
-      // 2. Create the script element manually
       const script = document.createElement('script');
       script.src = scriptSrc;
       script.type = 'text/javascript';
       script.async = true;
+      
+      // Error handling: if script fails to load
+      script.onerror = () => {
+        if (adRef.current) adRef.current.style.display = 'none';
+      };
 
-      // 3. Append to the div
       adRef.current.appendChild(script);
     }
-  }, [scriptSrc]); // Re-run if the script source changes
+  }, [scriptSrc, id]); // Re-run if ID or Source changes
 
   return (
-    <div className="w-full my-12 py-8 flex flex-col items-center border-y border-white/5 bg-white/[0.02]">
-      <span className="text-[9px] font-black uppercase tracking-[0.3em] text-gray-700 mb-6">
+    <div className="w-full my-8 flex flex-col items-center">
+      <span className="text-[9px] font-black uppercase tracking-[0.3em] text-gray-800 mb-4">
         {label}
       </span>
       
-      {/* The Ad Container */}
       <div 
         ref={adRef}
+        key={scriptSrc} // This forces a full refresh of the ad unit
         id={`atcontainer-${id}`} 
-        className="w-full max-w-4xl min-h-[100px] flex justify-center overflow-hidden"
+        className="w-full max-w-[728px] min-h-[90px] flex justify-center items-center bg-white/[0.01] rounded-xl overflow-hidden"
       >
-        {/* Adsterra script will live here */}
+        {/* Ad will load here */}
       </div>
     </div>
   );

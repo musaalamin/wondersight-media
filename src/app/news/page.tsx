@@ -43,7 +43,6 @@ export default function NewsroomPage() {
         <h2 className="text-2xl font-black uppercase tracking-widest mb-10 text-center">Latest <span className="text-[#75C9B7]">Reports</span></h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Now we use the sorted articles instead of hardcoded ones */}
           {sortedArticles.slice(0, 6).map((article) => (
             <NewsCard 
               key={article.id}
@@ -58,9 +57,9 @@ export default function NewsroomPage() {
       </section>
 
       <div className="max-w-6xl mx-auto">
-        {/* Ad Slot Fix Below */}
+        {/* Updated AdSlot with your Native Banner details */}
         <AdSlot 
-           id="main-news-banner" 
+           id="d672b73a8fef1129ef5fdafb6f13212b" 
            scriptSrc="https://pl28696234.effectivegatecpm.com/d672b73a8fef1129ef5fdafb6f13212b/invoke.js" 
            label="Institutional Supporter"
         />
