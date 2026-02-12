@@ -5,7 +5,7 @@ import AdSlot from '@/components/AdSlot';
 import articles from '@/lib/articles.json'; // THIS WAS MISSING
 
 export default function YouthPage() {
-  const youthArticles = articles.filter(article => article.category === 'Youth & Intelligence');
+  const youthArticles = articles.filter(article => article.category === 'youth');
   return (
     <main className="min-h-screen bg-[#120B21] text-white py-20 px-6">
       {/* ... rest of your existing code ... */}

@@ -5,7 +5,7 @@ import AdSlot from '@/components/AdSlot';
 import articles from '@/lib/articles.json'; // THIS WAS MISSING
 
 export default function GovernancePage() {
-  const govArticles = articles.filter(article => article.category === 'Governance & Security');  
+  const govArticles = articles.filter(article => article.category === 'governance-security');  
   return (
     <main className="min-h-screen bg-[#120B21] text-white py-20 px-6">
       {/* ... rest of your existing code ... */}

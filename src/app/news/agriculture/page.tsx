@@ -5,7 +5,7 @@ import AdSlot from '@/components/AdSlot';
 import articles from '@/lib/articles.json'; 
 
 export default function AgricultureNewsPage() {
-  const agriArticles = articles.filter(article => article.category === 'Agriculture');
+  const agriArticles = articles.filter(article => article.category === 'agriculture');
   // ... rest of your code
 
   return (
