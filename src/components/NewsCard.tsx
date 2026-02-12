@@ -11,8 +11,19 @@ interface NewsCardProps {
 }
 
 export default function NewsCard({ title, excerpt, category, date, slug, color = "text-[#75C9B7]" }: NewsCardProps) {
+  
+  // This logic ensures "Governance" or "Security" both go to "governance-security"
+  const getFolder = (cat: string) => {
+    const check = cat.toLowerCase();
+    if (check.includes('govern') || check.includes('secur')) return 'governance-security';
+    if (check.includes('youth')) return 'youth';
+    return check; // defaults to agriculture or others
+  };
+
+  const folder = getFolder(category);
+
   return (
-    <Link href={`/news/${category.toLowerCase()}/${slug}`} className="block group">
+    <Link href={`/news/${folder}/${slug}`} className="block group">
       <div className="p-6 bg-white/5 border border-white/10 rounded-3xl hover:bg-white/[0.08] transition-all duration-300 h-full flex flex-col justify-between">
         <div>
           <div className="flex justify-between items-center mb-4">

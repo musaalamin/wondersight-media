@@ -1,4 +1,15 @@
 [
+{
+  "id": "1",
+  "title": "Zamfara Audit 2025: Tracking Local Government Spending and Rural Development",
+  "excerpt": "A review of rural development allocations and public accountability trends in Zamfara State's 2025 budget cycle.",
+  "category": "governance-security",
+  "date": "FEB 17, 2026",
+  "slug": "zamfara-audit-2025",
+  "image": "/news/government-house.jpg",
+  "content": "Public trust in governance depends heavily on transparency and accountability. In Zamfara State, rural communities often question how development funds are allocated and implemented.\n\nThe 2025 local government budget included allocations for rural road rehabilitation, primary healthcare upgrades, and agricultural extension services. However, implementation tracking remains limited at the community level.\n\nInterviews with civil society observers indicate that while budget announcements are public, detailed expenditure breakdowns are not always accessible to citizens. This creates a gap between policy intention and public understanding.\n\nSome local councils have begun publishing summary updates on completed projects, including borehole repairs and classroom renovations. These transparency steps, though small, improve public confidence.\n\nAnalysts recommend stronger citizen budget literacy programs, clearer procurement disclosures, and independent monitoring partnerships to enhance accountability.\n\nEffective governance is not only about allocation — it is about implementation, communication, and measurable impact on rural livelihoods."
+},
+
   {
     "id": "1",
     "title": "Can Community-Led Peace Dialogues Reduce Rural Violence in Zamfara?",
@@ -28,5 +39,16 @@
     "slug": "northern-youth-ngo-job-skills-gap",
     "image": "/news/youth-training.jpg",
     "content": "Youth unemployment remains a persistent challenge across Northern Nigeria. Yet NGOs and development agencies consistently report difficulty finding candidates with job-ready competencies.\n\nAn HR officer at a regional NGO stated: \"We receive many applications, but most candidates do not tailor their CVs to the job description. Many lack proposal writing and reporting skills.\"\n\nCommon issues include generic CV submissions, weak email communication, absence of measurable achievements, and limited digital literacy.\n\nEmployers note that successful candidates typically demonstrate competency in Microsoft Excel, Monitoring & Evaluation basics, structured reporting, and professional communication.\n\nPractical recommendations for youth include customizing CVs for each application, highlighting measurable results, completing short certifications, improving digital literacy, and building professional LinkedIn profiles.\n\nEmployment opportunity exists — but preparation must match expectation."
-  }
+  },
+{
+  "id": "3",
+  "title": "The Rise of Tech Hubs in Zamfara: Are They Creating Real Opportunities for Youth?",
+  "excerpt": "Exploring the growth of small tech learning centers and innovation hubs in Zamfara and their potential to reshape youth employment pathways.",
+  "category": "youth",
+  "date": "FEB 16, 2026",
+  "slug": "zamfara-tech-hubs-growth",
+  "image": "/news/tech-hub.jpg",
+  "content": "In recent years, small tech hubs and digital learning centers have begun emerging in Zamfara State. These hubs offer training in coding, graphic design, digital marketing, and basic computer literacy.\n\nWith youth unemployment remaining high, many young people see digital skills as a pathway to remote work and freelance income. Some hubs partner with national platforms to provide online certifications and mentorship programs.\n\nHowever, growth remains uneven. Limited internet infrastructure, unstable electricity supply, and funding shortages restrict scalability. Many hubs rely on volunteer instructors and temporary sponsorship.\n\nDespite these challenges, early outcomes show promise. Several trainees have secured remote internships, freelance design contracts, and social media management roles for local businesses.\n\nExperts suggest that for tech hubs to become sustainable employment engines, they must integrate entrepreneurship training, connect learners to real job pipelines, and build partnerships with national and international tech organizations.\n\nThe growth of tech hubs in Zamfara signals a shift in youth ambition — from migration-driven survival strategies toward digital innovation and localized opportunity creation."
+}
+
 ]

@@ -12,15 +12,13 @@ const categories = [
 export default function NewsroomPage() {
   return (
     <main className="min-h-screen bg-[#120B21] text-white py-20 px-6">
-      {/* Hero Section */}
       <div className="max-w-6xl mx-auto text-center mb-16">
-        <h1 className="text-5xl font-black mb-6 tracking-tighter">THE <span className="text-[#FF5722]">NEWSROOM</span></h1>
+        <h1 className="text-5xl font-black mb-6 tracking-tighter text-white">THE <span className="text-[#FF5722]">NEWSROOM</span></h1>
         <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
           Solution-oriented journalism focusing on the technical and civic growth of Northwestern Nigeria.
         </p>
       </div>
 
-      {/* Category Beats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 max-w-6xl mx-auto">
         {categories.map((cat) => (
           <Link key={cat.slug} href={`/news/${cat.slug}`}>
@@ -35,7 +33,6 @@ export default function NewsroomPage() {
 
       <hr className="border-white/5 mb-20 max-w-6xl mx-auto" />
 
-      {/* Latest Reports Section using your NewsCard component */}
       <section className="max-w-6xl mx-auto mb-20">
         <h2 className="text-2xl font-black uppercase tracking-widest mb-10 text-center">Latest <span className="text-[#75C9B7]">Reports</span></h2>
         
@@ -66,7 +63,6 @@ export default function NewsroomPage() {
         </div>
       </section>
 
-      {/* Ad Section using your AdSlot component */}
       <div className="max-w-6xl mx-auto">
         <AdSlot 
            id="main-news-banner" 
