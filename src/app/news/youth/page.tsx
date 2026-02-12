@@ -2,11 +2,13 @@ import React from 'react';
 import Link from 'next/link';
 import NewsCard from '@/components/NewsCard';
 import AdSlot from '@/components/AdSlot';
+import articles from '@/lib/articles.json'; // THIS WAS MISSING
 
 export default function YouthPage() {
   const youthArticles = articles.filter(article => article.category === 'Youth & Intelligence');
-return (
+  return (
     <main className="min-h-screen bg-[#120B21] text-white py-20 px-6">
+      {/* ... rest of your existing code ... */}
       <div className="max-w-6xl mx-auto">
         <Link href="/news" className="text-[#FF5722] text-xs font-bold uppercase mb-8 block tracking-widest">
           ← Newsroom Home

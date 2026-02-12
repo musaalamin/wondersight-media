@@ -5,8 +5,8 @@ import AdSlot from '@/components/AdSlot';
 import articles from '@/lib/articles.json'; 
 
 export default function AgricultureNewsPage() {
-  // Filter the articles to ONLY show Agriculture
   const agriArticles = articles.filter(article => article.category === 'Agriculture');
+  // ... rest of your code
 
   return (
     <main className="min-h-screen bg-[#120B21] text-white py-20 px-6">
