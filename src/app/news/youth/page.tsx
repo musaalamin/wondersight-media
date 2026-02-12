@@ -4,7 +4,7 @@ import NewsCard from '@/components/NewsCard';
 import AdSlot from '@/components/AdSlot';
 
 export default function YouthPage() {
-  const youthArticles = articles.filter(article => article.category === 'Youth');
+  const youthArticles = articles.filter(article => article.category === 'Youth & Intelligence');
 return (
     <main className="min-h-screen bg-[#120B21] text-white py-20 px-6">
       <div className="max-w-6xl mx-auto">
