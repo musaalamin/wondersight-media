@@ -15,7 +15,7 @@
     "excerpt": "NISECA Africa pilots AI-powered crop disease detection optimized for 3G/4G rural environments in Northwestern Nigeria.",
     "category": "Agriculture",
     "date": "FEB 14, 2026",
-    "slug": "testing-ai-crop-detection-low-bandwidth",
+    "slug": "niseca-maize-rust-gusau",
     "image": "/news/maize-field.jpg",
     "content": "Smallholder farmers in Northwestern Nigeria frequently lose crops due to late detection of fungal infections, pest infestations, and climate-related stress. Access to agricultural extension officers remains limited, especially in remote communities.\n\nNISECA Africa is testing AI-powered crop disease detection using image-based computer vision models. Farmers upload leaf images, and the system identifies possible disease patterns. Unlike urban agritech tools, this system is optimized for low-bandwidth 3G/4G environments.\n\nEarly pilot testing indicates diagnosis response time reduced from days to minutes. However, challenges include unstable connectivity, limited smartphone access, and farmer trust in automated recommendations.\n\nImage classification accuracy varies depending on lighting and clarity. NISECA does not replace agronomists but provides early alerts that can guide faster intervention.\n\nThe larger question remains: can context-adapted AI meaningfully reduce crop loss at scale? The answer depends on adoption, accessibility, and measurable economic impact."
   },
