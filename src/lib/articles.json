@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "title": "Can Community-Led Peace Dialogues Reduce Rural Violence in Zamfara?",
+    "excerpt": "Exploring whether grassroots peace dialogues between traditional leaders, youth, and security actors can meaningfully reduce rural violence in conflict-affected communities.",
+    "category": "Governance & Security",
+    "date": "FEB 15, 2026",
+    "slug": "community-peace-dialogues-zamfara",
+    "image": "/news/peace-dialogue.jpg",
+    "content": "For over a decade, parts of Zamfara State have faced recurring rural violence driven by banditry, cattle rustling, and disputes over land and mining resources. Entire communities have experienced displacement, school closures, and agricultural disruption. While federal and state security operations continue, rural residents often describe a deeper issue: mistrust between communities, authorities, and armed actors.\n\nIn response, some local leaders have begun experimenting with community-led peace dialogues — structured meetings between village heads, youth representatives, religious leaders, and sometimes security officials.\n\nWhile comprehensive evaluation data is limited, civil society organizations report that informal mediation committees have reduced inter-community disputes over grazing land in several local government areas. Religious leaders have also intervened in revenge-related tensions.\n\nA community leader in Maru LGA explained: \"When we sit and talk before conflict escalates, we avoid bloodshed. But dialogue works only when all sides trust the process.\"\n\nWhat is working includes early mediation, involvement of respected leaders, youth inclusion, and religious framing around coexistence. However, major challenges remain: lack of funding, political interference, weak follow-up mechanisms, and limited outcome tracking.\n\nCommunity-led dialogue shows preventive promise, but long-term stability requires integration with economic recovery and structured monitoring systems."
+  },
+  {
+    "id": "2",
+    "title": "Testing AI for Crop Disease Detection in Low-Bandwidth Rural Areas",
+    "excerpt": "NISECA Africa pilots AI-powered crop disease detection optimized for 3G/4G rural environments in Northwestern Nigeria.",
+    "category": "Agriculture",
+    "date": "FEB 14, 2026",
+    "slug": "testing-ai-crop-detection-low-bandwidth",
+    "image": "/news/maize-field.jpg",
+    "content": "Smallholder farmers in Northwestern Nigeria frequently lose crops due to late detection of fungal infections, pest infestations, and climate-related stress. Access to agricultural extension officers remains limited, especially in remote communities.\n\nNISECA Africa is testing AI-powered crop disease detection using image-based computer vision models. Farmers upload leaf images, and the system identifies possible disease patterns. Unlike urban agritech tools, this system is optimized for low-bandwidth 3G/4G environments.\n\nEarly pilot testing indicates diagnosis response time reduced from days to minutes. However, challenges include unstable connectivity, limited smartphone access, and farmer trust in automated recommendations.\n\nImage classification accuracy varies depending on lighting and clarity. NISECA does not replace agronomists but provides early alerts that can guide faster intervention.\n\nThe larger question remains: can context-adapted AI meaningfully reduce crop loss at scale? The answer depends on adoption, accessibility, and measurable economic impact."
+  },
+  {
+    "id": "3",
+    "title": "What Northern Youth Are Missing in NGO Job Applications",
+    "excerpt": "An analysis of common skill gaps preventing qualified youth from securing NGO and development sector employment in Northern Nigeria.",
+    "category": "Youth & Intelligence",
+    "date": "FEB 13, 2026",
+    "slug": "northern-youth-ngo-job-skills-gap",
+    "image": "/news/youth-training.jpg",
+    "content": "Youth unemployment remains a persistent challenge across Northern Nigeria. Yet NGOs and development agencies consistently report difficulty finding candidates with job-ready competencies.\n\nAn HR officer at a regional NGO stated: \"We receive many applications, but most candidates do not tailor their CVs to the job description. Many lack proposal writing and reporting skills.\"\n\nCommon issues include generic CV submissions, weak email communication, absence of measurable achievements, and limited digital literacy.\n\nEmployers note that successful candidates typically demonstrate competency in Microsoft Excel, Monitoring & Evaluation basics, structured reporting, and professional communication.\n\nPractical recommendations for youth include customizing CVs for each application, highlighting measurable results, completing short certifications, improving digital literacy, and building professional LinkedIn profiles.\n\nEmployment opportunity exists — but preparation must match expectation."
+  }
+]

@@ -4,7 +4,8 @@ import NewsCard from '@/components/NewsCard';
 import AdSlot from '@/components/AdSlot';
 
 export default function GovernancePage() {
-  return (
+const govArticles = articles.filter(article => article.category === 'Governance');  
+return (
     <main className="min-h-screen bg-[#120B21] text-white py-20 px-6">
       <div className="max-w-6xl mx-auto">
         <Link href="/news" className="text-blue-500 text-xs font-bold uppercase mb-8 block tracking-widest">
