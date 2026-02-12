@@ -23,7 +23,7 @@ export default function AdSlot({ id, scriptSrc, label = "Sponsored Content" }: A
       <Script
         id={`ad-script-${id}`}
         src={scriptSrc}
-        strategy="lazyOnload"
+        strategy="afterInteractive"
       />
     </div>
   );
