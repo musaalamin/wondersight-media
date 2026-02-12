@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface AdSlotProps {
   id: string;
@@ -8,26 +8,23 @@ interface AdSlotProps {
 }
 
 export default function AdSlot({ id, scriptSrc, label = "Sponsored Content" }: AdSlotProps) {
-  
-  useEffect(() => {
-    // This forces the script to append to the body every time the component mounts
-    const script = document.createElement('script');
-    script.src = scriptSrc;
-    script.async = true;
-    
-    // Some Adsterra scripts need to be inside the specific container
-    const container = document.getElementById(`container-${id}`);
-    if (container) {
-      container.appendChild(script);
-    }
+  const adRef = useRef<HTMLDivElement>(null);
 
-    return () => {
-      // Cleanup to prevent multiple scripts loading on top of each other
-      if (container) {
-        container.innerHTML = '';
-      }
-    };
-  }, [id, scriptSrc]);
+  useEffect(() => {
+    // 1. Clear the container to avoid duplicates
+    if (adRef.current) {
+      adRef.current.innerHTML = '';
+      
+      // 2. Create the script element manually
+      const script = document.createElement('script');
+      script.src = scriptSrc;
+      script.type = 'text/javascript';
+      script.async = true;
+
+      // 3. Append to the div
+      adRef.current.appendChild(script);
+    }
+  }, [scriptSrc]); // Re-run if the script source changes
 
   return (
     <div className="w-full my-12 py-8 flex flex-col items-center border-y border-white/5 bg-white/[0.02]">
@@ -35,8 +32,13 @@ export default function AdSlot({ id, scriptSrc, label = "Sponsored Content" }: A
         {label}
       </span>
       
-      <div id={`container-${id}`} className="w-full max-w-4xl min-h-[100px] flex justify-center">
-        {/* The script will now be injected here manually by the useEffect */}
+      {/* The Ad Container */}
+      <div 
+        ref={adRef}
+        id={`atcontainer-${id}`} 
+        className="w-full max-w-4xl min-h-[100px] flex justify-center overflow-hidden"
+      >
+        {/* Adsterra script will live here */}
       </div>
     </div>
   );
