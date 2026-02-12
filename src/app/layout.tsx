@@ -8,6 +8,10 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Wonder Sight Media & Foundation",
   description: "Digital Solutions and Solution Journalism for Northern Nigeria",
+  // GOOGLE ADSENSE VERIFICATION META TAG
+  other: {
+    "google-adsense-account": "ca-pub-9706843263138053",
+  },
 };
 
 export default function RootLayout({
@@ -18,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        {/* GOOGLE ADSENSE VERIFICATION CODE */}
+        {/* Keep the script as well for actual ad delivery */}
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9706843263138053"
@@ -27,8 +31,6 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} bg-[#120B21] text-white antialiased`}>
-        
-        {/* Navigation Bar */}
         <nav className="sticky top-0 z-50 bg-[#120B21]/80 backdrop-blur-md border-b border-white/10 px-6 py-4">
           <div className="max-w-6xl mx-auto flex justify-between items-center">
             <a href="/" className="text-xl font-black bg-gradient-to-r from-[#E91E63] to-[#FF5722] bg-clip-text text-transparent">
@@ -46,12 +48,8 @@ export default function RootLayout({
           </div>
         </nav>
 
-        {/* Page Content */}
-        <div className="min-h-screen">
-          {children}
-        </div>
+        <div className="min-h-screen">{children}</div>
 
-        {/* Global Footer */}
         <footer className="border-t border-white/10 py-10 px-6 bg-black/20">
           <div className="max-w-6xl mx-auto text-center md:text-left grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
@@ -68,7 +66,6 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
-
       </body>
     </html>
   );
