@@ -13,7 +13,9 @@ export default function NewsroomPage() {
   return (
     <main className="min-h-screen bg-[#120B21] text-white py-20 px-6">
       <div className="max-w-6xl mx-auto text-center mb-16">
-        <h1 className="text-5xl font-black mb-6 tracking-tighter text-white">THE <span className="text-[#FF5722]">NEWSROOM</span></h1>
+        <h1 className="text-5xl font-black mb-6 tracking-tighter text-white">
+          THE <span className="text-[#FF5722]">NEWSROOM</span>
+        </h1>
         <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
           Solution-oriented journalism focusing on the technical and civic growth of Northwestern Nigeria.
         </p>
@@ -34,7 +36,9 @@ export default function NewsroomPage() {
       <hr className="border-white/5 mb-20 max-w-6xl mx-auto" />
 
       <section className="max-w-6xl mx-auto mb-20">
-        <h2 className="text-2xl font-black uppercase tracking-widest mb-10 text-center">Latest <span className="text-[#75C9B7]">Reports</span></h2>
+        <h2 className="text-2xl font-black uppercase tracking-widest mb-10 text-center">
+          Latest <span className="text-[#75C9B7]">Reports</span>
+        </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <NewsCard 
@@ -52,12 +56,13 @@ export default function NewsroomPage() {
             date="FEB 12, 2026"
             slug="niseca-maize-rust-gusau"
           />
+          {/* UPDATED SKILLS GAP CARD */}
           <NewsCard 
             title="The Skills Gap: What Employers in Northern Nigeria Want"
             excerpt="A survey of 50 local NGOs reveals the top 5 missing skills in job seekers..."
             category="Youth"
             date="FEB 08, 2026"
-            slug="skills-gap-survey-2026"
+            slug="skills-gap-survey-2026" 
             color="text-[#FF5722]"
           />
         </div>
