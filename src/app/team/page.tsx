@@ -18,9 +18,16 @@ const teamMembers = [
   {
     name: "Jimeh Saleh",
     role: "Advisor",
-    image: "/team/jimeh.webp",
+    image: "/team/Jimeh.webp",
     bio: "Seasoned journalist and former senior producer at BBC Hausa. He brings invaluable guidance to our frontline reporting and media innovation.",
     link: "https://www.linkedin.com/in/jimeh-saleh-a20992202" 
+  },
+{
+    name: "Buhari Morikie",
+    role: "Senior Investigator",
+    image: "/team/buhari.webp",
+    bio: "Buhari is a humanitarian activist and community development advocate committed to promoting good governance and social accountability. Their work focuses on empowering underserved communities, strengthening civic participation, and advancing sustainable development initiatives. Through grassroots engagement and policy advocacy, they support efforts that foster transparency, resilience, and inclusive growth.",
+    link: "https://www.facebook.com/buhari.morikie" 
   },
   {
     name: "Muhammad Bello",
