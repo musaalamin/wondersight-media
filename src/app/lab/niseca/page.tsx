@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 
 const PILOT_LOCATIONS: Record<string, { lat: number, lon: number, hausa: string }> = {
   "gusau": { lat: 12.1622, lon: 6.6614, hausa: "Gusau" },
@@ -16,39 +16,40 @@ export default function NisecaLab() {
   const [lang, setLang] = useState<'EN' | 'HA'>('EN');
   const [showLimits, setShowLimits] = useState(false);
   const [locName, setLocName] = useState('');
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const t = {
     EN: {
       disclaimerTitle: "⚠ Research-Based Advisory Notice",
-      disclaimerText: "This dashboard provides research-based seasonal climate insights and does not replace official meteorological guidance. Farmers are advised to consult local agricultural extension services before making major planting decisions.",
+      disclaimerText: "This dashboard provides research-based seasonal climate insights and does not replace official meteorological guidance. Consult local extension services before planting.",
       title: "Seasonal Agricultural Intelligence – Pilot",
-      detect: "Use My Exact Location",
+      detect: "Use My Exact Location (3km Accuracy)",
       select: "Or Select Research Zone...",
       rainfall: "7-Day Cumulative Rainfall",
-      temp: "Estimated Max Temp",
       confidence: "Confidence Level",
       risk: "Research Advisory",
+      noData: "Select a location to see research-based risk factors.",
       low: "Moisture likely insufficient for planting.",
       mod: "Early moisture onset possible. Monitor soil consistency.",
-      high: "Consistent moisture likely. Prepare planting activities if soil condition permits.",
+      high: "Consistent moisture likely. Prepare planting activities.",
       basis: "Data Basis & Limitations",
-      source: "Source: Open-Meteo API (Short-term forecast aggregation). Does not predict full seasonal patterns."
+      download: "Download Field Report Card"
     },
     HA: {
       disclaimerTitle: "⚠ Sanarwar Binciken Noma",
-      disclaimerText: "Wannan shafi yana bayar da bayanan binciken yanayi ne kawai, ba madadin rahoton hukumomin yanayi ba ne. Manoma su tuntubi jami'an gona kafin yanke shawarar shuka.",
+      disclaimerText: "Wannan shafi yana bayar da bayanan bincike ne kawai. Ba madadin rahoton yanayi ba ne. A tuntubi jami'an gona kafin shuka.",
       title: "Binciken Hikimar Yanayin Noma – Gwaji",
-      detect: "Gano Inda Nake Yanzu",
+      detect: "Gano Inda Nake Yanzu (3km)",
       select: "Ko Zabi Wajen Bincike...",
       rainfall: "Ruwan Kwanaki 7 (Jimilla)",
-      temp: "Yanayin Zafi",
       confidence: "Matakin Amincewa",
       risk: "Shawarar Bincike",
+      noData: "Zabi gari domin ganin shawarar bincike.",
       low: "Mai yiwuwa ruwan bai isa shuka ba tukuna.",
       mod: "Akwai alamun farkon ruwa. A lura da yanayin kasar gona.",
-      high: "Akwai yiwuwar samun ruwa mai karko. A fara shirin shuka idan kasa ta bada dama.",
+      high: "Akwai yiwuwar samun ruwa mai karko. A fara shirin shuka.",
       basis: "Tushen Bayanai da Kasawa",
-      source: "Madogara: Open-Meteo API. Wannan bincike ne na kwanaki 7, ba na dukkan lokacin damina ba."
+      download: "Sauke Taswirar Rahoto"
     }
   };
 
@@ -60,8 +61,8 @@ export default function NisecaLab() {
       const res = await fetch(url);
       const data = await res.json();
       setWeatherData(data);
-    } catch (error) {
-      console.error("API Error:", error);
+    } catch (e) {
+      console.error(e);
     } finally {
       setLoading(false);
     }
@@ -75,45 +76,90 @@ export default function NisecaLab() {
     }
   };
 
-  // Logic for 7-day cumulative rainfall
   const totalRain = weatherData?.daily.rain_sum.reduce((a: number, b: number) => a + b, 0) || 0;
   
   const getAdvisory = () => {
-    if (totalRain < 10) return { text: t[lang].low, color: "text-red-400", conf: "Low" };
-    if (totalRain >= 10 && totalRain <= 25) return { text: t[lang].mod, color: "text-yellow-400", conf: "Moderate" };
-    return { text: t[lang].high, color: "text-green-400", conf: "High" };
+    if (totalRain < 10) return { text: t[lang].low, conf: "Low", color: "#F87171" };
+    if (totalRain >= 10 && totalRain <= 25) return { text: t[lang].mod, conf: "Moderate", color: "#FBBF24" };
+    return { text: t[lang].high, conf: "High", color: "#34D399" };
   };
 
-  const advisory = getAdvisory();
+  const generateCard = () => {
+    const canvas = canvasRef.current;
+    if (!canvas || !weatherData) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.fillStyle = '#120B21';
+    ctx.fillRect(0, 0, 400, 500);
+    ctx.fillStyle = '#75C9B7';
+    ctx.font = 'bold 24px sans-serif';
+    ctx.fillText('NISECA LAB REPORT', 30, 50);
+    
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '14px sans-serif';
+    ctx.fillText(`Location: ${locName}`, 30, 90);
+    ctx.fillText(`Date: ${new Date().toLocaleDateString()}`, 30, 115);
+    
+    ctx.strokeStyle = '#333';
+    ctx.strokeRect(20, 140, 360, 1);
+
+    ctx.fillStyle = '#75C9B7';
+    ctx.fillText(t[lang].rainfall.toUpperCase(), 30, 180);
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 32px sans-serif';
+    ctx.fillText(`${totalRain.toFixed(1)}mm`, 30, 220);
+
+    ctx.font = 'bold 16px sans-serif';
+    ctx.fillStyle = getAdvisory().color;
+    ctx.fillText(`${t[lang].confidence}: ${getAdvisory().conf}`, 30, 260);
+
+    ctx.fillStyle = '#999';
+    ctx.font = 'italic 14px sans-serif';
+    const advisoryText = getAdvisory().text;
+    const words = advisoryText.split(' ');
+    let line = '';
+    let y = 310;
+    words.forEach(word => {
+      if ((line + word).length > 35) { ctx.fillText(line, 30, y); line = word + ' '; y += 20; }
+      else { line += word + ' '; }
+    });
+    ctx.fillText(line, 30, y);
+
+    ctx.fillStyle = '#333';
+    ctx.fillRect(0, 450, 400, 50);
+    ctx.fillStyle = '#666';
+    ctx.font = '10px sans-serif';
+    ctx.fillText('WONDER SIGHT LAB | APPLIED INNOVATION PILOT', 80, 480);
+
+    const link = document.createElement('a');
+    link.download = `Niseca-Report-${locName}.png`;
+    link.href = canvas.toDataURL();
+    link.click();
+  };
 
   return (
     <main className="min-h-screen bg-[#120B21] text-white py-20 px-6">
       <div className="max-w-4xl mx-auto">
-        
-        {/* Language & Header */}
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-black text-[#75C9B7]">NISECA <span className="text-white">LAB</span></h1>
           <div className="flex bg-white/5 p-1 rounded-xl border border-white/10">
-            {['EN', 'HA'].map((l) => (
-              <button key={l} onClick={() => setLang(l as any)} className={`px-4 py-2 rounded-lg text-[10px] font-black transition ${lang === l ? 'bg-[#75C9B7] text-black' : 'text-gray-500'}`}>{l === 'EN' ? 'ENGLISH' : 'HAUSA'}</button>
+            {(['EN', 'HA'] as const).map(l => (
+              <button key={l} onClick={() => setLang(l)} className={`px-4 py-2 rounded-lg text-[10px] font-black transition ${lang === l ? 'bg-[#75C9B7] text-black' : 'text-gray-500'}`}>{l === 'EN' ? 'ENGLISH' : 'HAUSA'}</button>
             ))}
           </div>
         </div>
 
-        {/* 1️⃣ ADVISORY NOTICE (Amber Box) */}
-        <section className="mb-10 p-6 border-2 border-amber-500/50 bg-amber-500/5 rounded-3xl">
-          <h2 className="text-amber-500 font-black uppercase tracking-widest text-xs mb-3">{t[lang].disclaimerTitle}</h2>
+        <div className="mb-10 p-6 border-2 border-amber-500/50 bg-amber-500/5 rounded-3xl">
+          <h2 className="text-amber-500 font-black text-xs mb-3 uppercase tracking-widest">{t[lang].disclaimerTitle}</h2>
           <p className="text-amber-200/70 text-sm leading-relaxed">{t[lang].disclaimerText}</p>
-        </section>
+        </div>
 
-        {/* 3️⃣ SECTION TITLE */}
         <section className="mb-12 p-8 bg-white/[0.02] border border-white/10 rounded-[2.5rem]">
           <h2 className="text-2xl font-black uppercase mb-8">{t[lang].title}</h2>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-            {/* Location Selectors */}
-            <div className="md:col-span-1 space-y-4">
-              <button onClick={detectLocation} className="w-full py-3 bg-[#75C9B7] text-black font-black text-[10px] uppercase rounded-xl hover:bg-white transition">
+            <div className="space-y-4">
+              <button onClick={detectLocation} className="w-full py-4 bg-[#75C9B7] text-black font-black text-[10px] uppercase rounded-xl hover:bg-white transition-all">
                 {t[lang].detect}
               </button>
               <select onChange={(e) => {
@@ -125,42 +171,41 @@ export default function NisecaLab() {
               </select>
             </div>
 
-            {/* Data Cards */}
             <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-5 bg-white/5 rounded-2xl border border-white/5">
                 <span className="text-[9px] font-black text-[#75C9B7] uppercase block mb-1">{t[lang].rainfall}</span>
-                <p className="text-2xl font-bold">{weatherData ? `${totalRain.toFixed(1)}mm` : '--'}</p>
+                <p className="text-3xl font-bold mt-2">{weatherData ? `${totalRain.toFixed(1)}mm` : '--'}</p>
               </div>
               <div className="p-5 bg-white/5 rounded-2xl border border-white/5">
                 <span className="text-[9px] font-black text-[#75C9B7] uppercase block mb-1">{t[lang].confidence}</span>
-                <p className={`text-xl font-bold ${weatherData ? '' : 'text-gray-700'}`}>
-                   {weatherData ? advisory.conf : '--'}
-                </p>
+                <p className="text-xl font-bold mt-2">{weatherData ? getAdvisory().conf : '--'}</p>
               </div>
-              
-              {/* 2️⃣ RISK ADVISORY (7-Day Logic) */}
               <div className="sm:col-span-2 p-6 bg-white/5 rounded-2xl border border-white/10">
                 <span className="text-[9px] font-black text-gray-500 uppercase block mb-2">{t[lang].risk} {locName && `[${locName}]`}</span>
-                <p className={`text-sm leading-relaxed font-bold ${weatherData ? advisory.color : 'text-gray-600'}`}>
-                  {weatherData ? advisory.text : t[lang].noData}
+                <p className={`text-sm leading-relaxed font-bold ${weatherData ? '' : 'text-gray-600'}`} style={{color: weatherData ? getAdvisory().color : ''}}>
+                  {weatherData ? getAdvisory().text : t[lang].noData}
                 </p>
+                {weatherData && (
+                  <button onClick={generateCard} className="mt-6 text-[9px] font-black uppercase tracking-widest border-b border-[#75C9B7] pb-1 hover:text-[#75C9B7] transition">
+                    {t[lang].download} ↓
+                  </button>
+                )}
               </div>
             </div>
           </div>
         </section>
 
-        {/* 4️⃣ DATA BASIS (Collapsible) */}
-        <section className="mb-12">
-          <button onClick={() => setShowLimits(!showLimits)} className="text-xs font-black uppercase tracking-widest text-gray-500 flex items-center gap-2">
+        <canvas ref={canvasRef} width="400" height="500" className="hidden" />
+
+        <section>
+          <button onClick={() => setShowLimits(!showLimits)} className="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 hover:text-white transition">
             {t[lang].basis} {showLimits ? '▲' : '▼'}
           </button>
           {showLimits && (
-            <div className="mt-4 p-6 bg-white/[0.02] border border-white/5 rounded-2xl text-[11px] text-gray-500 space-y-3 leading-relaxed">
+            <div className="mt-4 p-6 bg-white/[0.02] border border-white/5 rounded-2xl text-[11px] text-gray-500 leading-relaxed space-y-2">
               <p>• <strong>Data Source:</strong> Open-Meteo API</p>
-              <p>• <strong>Forecast Range:</strong> 7 Days</p>
-              <p>• <strong>Model Type:</strong> Short-term forecast aggregation</p>
+              <p>• <strong>Accuracy:</strong> 3km radius via Browser Geolocation</p>
               <p>• <strong>Limitation:</strong> Does not predict full seasonal rainfall patterns.</p>
-              <p>• <strong>Future Integration:</strong> Seasonal modeling layer planned for pilot phase 2.</p>
             </div>
           )}
         </section>
