@@ -1,35 +1,60 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-// Pilot Location Registry for Northern Nigeria
-const PILOT_LOCATIONS: Record<string, { lat: number, lon: number }> = {
-  "gusau": { lat: 12.1622, lon: 6.6614 },
-  "sokoto": { lat: 13.0059, lon: 5.2476 },
-  "birnin kebbi": { lat: 12.4539, lon: 4.1975 },
-  "katsina": { lat: 12.9894, lon: 7.6171 },
-  "kano": { lat: 12.0022, lon: 8.5920 },
-  "zaria": { lat: 11.0855, lon: 7.7199 }
+const PILOT_LOCATIONS: Record<string, { lat: number, lon: number, hausa: string }> = {
+  "gusau": { lat: 12.1622, lon: 6.6614, hausa: "Gusau" },
+  "sokoto": { lat: 13.0059, lon: 5.2476, hausa: "Sakkwato" },
+  "birnin kebbi": { lat: 12.4539, lon: 4.1975, hausa: "Birnin Kebbi" },
+  "katsina": { lat: 12.9894, lon: 7.6171, hausa: "Katsina" },
+  "kano": { lat: 12.0022, lon: 8.5920, hausa: "Kano" },
+  "zaria": { lat: 11.0855, lon: 7.7199, hausa: "Zariya" }
 };
 
 export default function NisecaLab() {
   const [weatherData, setWeatherData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [lang, setLang] = useState<'EN' | 'HA'>('EN');
+  const [showLimits, setShowLimits] = useState(false);
+  const [locName, setLocName] = useState('');
 
-  // Case Study Content
-  const sections = [
-    { id: "Problem", content: "Farmers in Gusau lose up to 40% of their maize crop to rust and leaf blight because they lack access to affordable agronomists." },
-    { id: "Approach", content: "We trained a TensorFlow model on 2,000 images of local crops to identify disease signatures from smartphone photos." },
-    { id: "Lessons", content: "Lighting conditions in open fields and the quality of low-end smartphone cameras significantly affect AI accuracy." },
-    { id: "Next Phase", content: "Developing an offline-first mobile app and improving the dataset with more 'Healthy' crop samples for balance." }
-  ];
+  const t = {
+    EN: {
+      disclaimerTitle: "⚠ Research-Based Advisory Notice",
+      disclaimerText: "This dashboard provides research-based seasonal climate insights and does not replace official meteorological guidance. Farmers are advised to consult local agricultural extension services before making major planting decisions.",
+      title: "Seasonal Agricultural Intelligence – Pilot",
+      detect: "Use My Exact Location",
+      select: "Or Select Research Zone...",
+      rainfall: "7-Day Cumulative Rainfall",
+      temp: "Estimated Max Temp",
+      confidence: "Confidence Level",
+      risk: "Research Advisory",
+      low: "Moisture likely insufficient for planting.",
+      mod: "Early moisture onset possible. Monitor soil consistency.",
+      high: "Consistent moisture likely. Prepare planting activities if soil condition permits.",
+      basis: "Data Basis & Limitations",
+      source: "Source: Open-Meteo API (Short-term forecast aggregation). Does not predict full seasonal patterns."
+    },
+    HA: {
+      disclaimerTitle: "⚠ Sanarwar Binciken Noma",
+      disclaimerText: "Wannan shafi yana bayar da bayanan binciken yanayi ne kawai, ba madadin rahoton hukumomin yanayi ba ne. Manoma su tuntubi jami'an gona kafin yanke shawarar shuka.",
+      title: "Binciken Hikimar Yanayin Noma – Gwaji",
+      detect: "Gano Inda Nake Yanzu",
+      select: "Ko Zabi Wajen Bincike...",
+      rainfall: "Ruwan Kwanaki 7 (Jimilla)",
+      temp: "Yanayin Zafi",
+      confidence: "Matakin Amincewa",
+      risk: "Shawarar Bincike",
+      low: "Mai yiwuwa ruwan bai isa shuka ba tukuna.",
+      mod: "Akwai alamun farkon ruwa. A lura da yanayin kasar gona.",
+      high: "Akwai yiwuwar samun ruwa mai karko. A fara shirin shuka idan kasa ta bada dama.",
+      basis: "Tushen Bayanai da Kasawa",
+      source: "Madogara: Open-Meteo API. Wannan bincike ne na kwanaki 7, ba na dukkan lokacin damina ba."
+    }
+  };
 
-  const fetchAgData = async (cityName: string) => {
-    const city = cityName.toLowerCase();
-    if (!PILOT_LOCATIONS[city]) return;
-
+  const fetchAgData = async (lat: number, lon: number, label: string) => {
     setLoading(true);
-    const { lat, lon } = PILOT_LOCATIONS[city];
-
+    setLocName(label);
     try {
       const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=rain_sum,temperature_2m_max&timezone=Africa%2FLagos&forecast_days=7`;
       const res = await fetch(url);
@@ -42,80 +67,103 @@ export default function NisecaLab() {
     }
   };
 
+  const detectLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        fetchAgData(pos.coords.latitude, pos.coords.longitude, lang === 'EN' ? "Current Coordinates" : "Inda kake yanzu");
+      });
+    }
+  };
+
+  // Logic for 7-day cumulative rainfall
+  const totalRain = weatherData?.daily.rain_sum.reduce((a: number, b: number) => a + b, 0) || 0;
+  
+  const getAdvisory = () => {
+    if (totalRain < 10) return { text: t[lang].low, color: "text-red-400", conf: "Low" };
+    if (totalRain >= 10 && totalRain <= 25) return { text: t[lang].mod, color: "text-yellow-400", conf: "Moderate" };
+    return { text: t[lang].high, color: "text-green-400", conf: "High" };
+  };
+
+  const advisory = getAdvisory();
+
   return (
     <main className="min-h-screen bg-[#120B21] text-white py-20 px-6">
       <div className="max-w-4xl mx-auto">
         
-        <header className="mb-16">
-          <h1 className="text-4xl font-black mb-4 text-[#75C9B7]">NISECA <span className="text-white">LAB</span></h1>
-          <p className="text-gray-400">Seasonal Agricultural Intelligence Pilot</p>
-        </header>
-
-        {/* --- SEASONAL ADVISORY DASHBOARD --- */}
-        <section className="mb-20 p-8 bg-white/[0.02] border border-white/10 rounded-[2.5rem]">
-          <div className="flex items-center gap-3 mb-8">
-            <div className={`w-2 h-2 rounded-full ${loading ? 'bg-yellow-500 animate-ping' : 'bg-[#75C9B7]'}`}></div>
-            <h2 className="text-2xl font-black uppercase tracking-tight">Research Advisory Dashboard</h2>
+        {/* Language & Header */}
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-4xl font-black text-[#75C9B7]">NISECA <span className="text-white">LAB</span></h1>
+          <div className="flex bg-white/5 p-1 rounded-xl border border-white/10">
+            {['EN', 'HA'].map((l) => (
+              <button key={l} onClick={() => setLang(l as any)} className={`px-4 py-2 rounded-lg text-[10px] font-black transition ${lang === l ? 'bg-[#75C9B7] text-black' : 'text-gray-500'}`}>{l === 'EN' ? 'ENGLISH' : 'HAUSA'}</button>
+            ))}
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* 1️⃣ ADVISORY NOTICE (Amber Box) */}
+        <section className="mb-10 p-6 border-2 border-amber-500/50 bg-amber-500/5 rounded-3xl">
+          <h2 className="text-amber-500 font-black uppercase tracking-widest text-xs mb-3">{t[lang].disclaimerTitle}</h2>
+          <p className="text-amber-200/70 text-sm leading-relaxed">{t[lang].disclaimerText}</p>
+        </section>
+
+        {/* 3️⃣ SECTION TITLE */}
+        <section className="mb-12 p-8 bg-white/[0.02] border border-white/10 rounded-[2.5rem]">
+          <h2 className="text-2xl font-black uppercase mb-8">{t[lang].title}</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+            {/* Location Selectors */}
             <div className="md:col-span-1 space-y-4">
-              <label className="text-[10px] font-black uppercase text-gray-500 tracking-widest">Pilot Location</label>
-              <select 
-                onChange={(e) => fetchAgData(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-sm focus:border-[#75C9B7] outline-none transition appearance-none"
-              >
-                <option value="">Select a State/City...</option>
-                {Object.keys(PILOT_LOCATIONS).map(loc => (
-                  <option key={loc} value={loc} className="bg-[#120B21]">{loc.toUpperCase()}</option>
-                ))}
+              <button onClick={detectLocation} className="w-full py-3 bg-[#75C9B7] text-black font-black text-[10px] uppercase rounded-xl hover:bg-white transition">
+                {t[lang].detect}
+              </button>
+              <select onChange={(e) => {
+                const loc = PILOT_LOCATIONS[e.target.value];
+                if (loc) fetchAgData(loc.lat, loc.lon, lang === 'EN' ? e.target.value.toUpperCase() : loc.hausa.toUpperCase());
+              }} className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-sm focus:border-[#75C9B7] outline-none">
+                <option value="">{t[lang].select}</option>
+                {Object.keys(PILOT_LOCATIONS).map(k => <option key={k} value={k} className="bg-[#120B21]">{k.toUpperCase()}</option>)}
               </select>
-              <p className="text-[10px] text-gray-600 leading-relaxed italic">
-                Data is pulled in real-time from Open-Meteo research nodes.
-              </p>
             </div>
 
+            {/* Data Cards */}
             <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-5 bg-white/5 rounded-2xl border border-white/5">
-                <span className="text-[9px] font-black text-[#75C9B7] uppercase block mb-2">Rainfall (Next 7 Days)</span>
-                <p className="text-2xl font-bold">
-                  {weatherData ? `${weatherData.daily.rain_sum.reduce((a:number, b:number) => a + b, 0).toFixed(1)}mm` : '--'}
-                </p>
+                <span className="text-[9px] font-black text-[#75C9B7] uppercase block mb-1">{t[lang].rainfall}</span>
+                <p className="text-2xl font-bold">{weatherData ? `${totalRain.toFixed(1)}mm` : '--'}</p>
               </div>
               <div className="p-5 bg-white/5 rounded-2xl border border-white/5">
-                <span className="text-[9px] font-black text-[#75C9B7] uppercase block mb-2">Avg. Max Temp</span>
-                <p className="text-2xl font-bold">
-                  {weatherData ? `${(weatherData.daily.temperature_2m_max.reduce((a:number, b:number) => a + b, 0) / 7).toFixed(1)}°C` : '--'}
+                <span className="text-[9px] font-black text-[#75C9B7] uppercase block mb-1">{t[lang].confidence}</span>
+                <p className={`text-xl font-bold ${weatherData ? '' : 'text-gray-700'}`}>
+                   {weatherData ? advisory.conf : '--'}
                 </p>
               </div>
-              <div className="sm:col-span-2 p-5 bg-[#FF5722]/5 rounded-2xl border border-[#FF5722]/20">
-                <span className="text-[9px] font-black text-[#FF5722] uppercase block mb-2">Risk Advisory</span>
-                <p className="text-sm text-gray-300">
-                  {!weatherData && "Select a location to see research-based risk factors."}
-                  {weatherData && weatherData.daily.rain_sum.reduce((a:number, b:number) => a + b, 0) < 2.0 && "Low moisture detected. Delay planting of high-sensitivity seeds."}
-                  {weatherData && weatherData.daily.rain_sum.reduce((a:number, b:number) => a + b, 0) >= 2.0 && "Moisture onset detected. Monitor soil for consistent saturation before full planting."}
+              
+              {/* 2️⃣ RISK ADVISORY (7-Day Logic) */}
+              <div className="sm:col-span-2 p-6 bg-white/5 rounded-2xl border border-white/10">
+                <span className="text-[9px] font-black text-gray-500 uppercase block mb-2">{t[lang].risk} {locName && `[${locName}]`}</span>
+                <p className={`text-sm leading-relaxed font-bold ${weatherData ? advisory.color : 'text-gray-600'}`}>
+                  {weatherData ? advisory.text : t[lang].noData}
                 </p>
               </div>
             </div>
-          </div>
-
-          <div className="mt-10 pt-6 border-t border-white/5">
-             <p className="text-[10px] text-gray-500 italic">
-                <strong>Source:</strong> Open-Meteo Non-Commercial Ag-Data. This tool is part of the Wonder Sight Lab research framework and is not for commercial forecasting.
-             </p>
           </div>
         </section>
 
-        {/* Original Case Study Notes */}
-        <div className="space-y-12">
-          <h3 className="text-xl font-bold uppercase tracking-widest border-b border-white/10 pb-4">Lab Findings & Case Study</h3>
-          {sections.map(s => (
-            <div key={s.id} className="border-l-2 border-white/10 pl-8">
-              <h3 className="text-xl font-bold mb-4 uppercase tracking-widest text-[#75C9B7]">{s.id}</h3>
-              <p className="text-gray-400 leading-relaxed">{s.content}</p>
+        {/* 4️⃣ DATA BASIS (Collapsible) */}
+        <section className="mb-12">
+          <button onClick={() => setShowLimits(!showLimits)} className="text-xs font-black uppercase tracking-widest text-gray-500 flex items-center gap-2">
+            {t[lang].basis} {showLimits ? '▲' : '▼'}
+          </button>
+          {showLimits && (
+            <div className="mt-4 p-6 bg-white/[0.02] border border-white/5 rounded-2xl text-[11px] text-gray-500 space-y-3 leading-relaxed">
+              <p>• <strong>Data Source:</strong> Open-Meteo API</p>
+              <p>• <strong>Forecast Range:</strong> 7 Days</p>
+              <p>• <strong>Model Type:</strong> Short-term forecast aggregation</p>
+              <p>• <strong>Limitation:</strong> Does not predict full seasonal rainfall patterns.</p>
+              <p>• <strong>Future Integration:</strong> Seasonal modeling layer planned for pilot phase 2.</p>
             </div>
-          ))}
-        </div>
+          )}
+        </section>
       </div>
     </main>
   );
