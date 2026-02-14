@@ -5,7 +5,8 @@
     "org": "International Rescue Committee",
     "loc": "Gusau, Zamfara",
     "link": "https://rescue.org/careers",
-    "tag": "NGO"
+    "tag": "NGO",
+    "date": "2026-02-13"
   },
   {
     "id": "2",
@@ -13,7 +14,8 @@
     "org": "UK Government",
     "loc": "United Kingdom",
     "link": "https://cscuk.fcdo.gov.uk/scholarships/",
-    "tag": "Scholarship"
+    "tag": "Scholarship",
+    "date": "2026-02-12"
   },
   {
     "id": "3",
@@ -21,6 +23,7 @@
     "org": "World Bank",
     "loc": "International",
     "link": "https://worldbank.org/careers",
-    "tag": "International"
+    "tag": "International",
+    "date": "2026-02-10"
   }
 ]

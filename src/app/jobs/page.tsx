@@ -5,32 +5,35 @@ import AdBanner from '@/components/AdBanner';
 
 export default function JobsPage() {
   const [activeTab, setActiveTab] = useState('All');
-  // ... rest of your code ...
 
- const handleApply = (realLink: string) => {
-  const adLink = "https://www.effectivegatecpm.com/tvzhnpve?key=8f36116b749a55da6ead042c04377bb7"; 
+  // --- AUTO-SORT LOGIC START ---
+  // This re-orders the jobs so the newest date is always #1
+  const sortedJobs = [...jobsData].sort((a, b) => 
+    new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+  // --- AUTO-SORT LOGIC END ---
 
-  // 1. Open the Adsterra Smartlink in a new tab
-  const adWindow = window.open(adLink, '_blank');
+  const handleApply = (realLink: string) => {
+    const adLink = "https://www.effectivegatecpm.com/tvzhnpve?key=8f36116b749a55da6ead042c04377bb7"; 
 
-  // 2. If the ad was blocked by the browser, we force the redirect in the current tab first
-  if (!adWindow || adWindow.closed || typeof adWindow.closed === 'undefined') {
-    // If blocked, we show the ad in the current tab, and the user can go back to the job
-    window.location.href = adLink;
-  } else {
-    // If ad opened successfully in new tab, send current tab to the real job link
-    window.location.href = realLink;
-  }
-};
+    const adWindow = window.open(adLink, '_blank');
 
+    if (!adWindow || adWindow.closed || typeof adWindow.closed === 'undefined') {
+      window.location.href = adLink;
+    } else {
+      window.location.href = realLink;
+    }
+  };
+
+  // Use the sortedJobs here instead of jobsData
   const filteredJobs = activeTab === 'All' 
-    ? jobsData 
-    : jobsData.filter(job => job.tag === activeTab);
+    ? sortedJobs 
+    : sortedJobs.filter(job => job.tag === activeTab);
 
   return (
     <main className="min-h-screen bg-[#120B21] text-white p-6">
       <header className="max-w-4xl mx-auto mb-12">
-        <h1 className="text-4xl font-black text-[#75C9B7] mb-2">Job Board</h1>
+        <h1 className="text-4xl font-black text-[#75C9B7] mb-2 tracking-tighter uppercase">Job Board</h1>
         <p className="text-gray-400">High-impact opportunities in Northern Nigeria.</p>
       </header>
 
@@ -43,7 +46,7 @@ export default function JobsPage() {
           <button 
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-6 py-2 rounded-full text-[10px] font-bold uppercase transition-all ${activeTab === tab ? 'bg-[#FF5722]' : 'bg-white/5 border border-white/10'}`}
+            className={`px-6 py-2 rounded-full text-[10px] font-bold uppercase transition-all whitespace-nowrap ${activeTab === tab ? 'bg-[#FF5722] text-white shadow-lg shadow-[#FF5722]/20' : 'bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10'}`}
           >
             {tab}
           </button>
@@ -51,25 +54,35 @@ export default function JobsPage() {
       </div>
 
       <div className="max-w-4xl mx-auto space-y-4">
-        {filteredJobs.map((job) => (
-          <div key={job.id} className="p-6 bg-white/5 border border-white/10 rounded-3xl hover:bg-white/[0.08] transition">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <div>
-                <span className="text-[9px] font-bold text-[#FF5722] bg-[#FF5722]/10 px-2 py-0.5 rounded-full uppercase tracking-tighter">
-                  {job.tag}
-                </span>
-                <h3 className="text-xl font-bold mt-1">{job.title}</h3>
-                <p className="text-gray-500 text-sm">{job.org} • 📍 {job.loc}</p>
+        {filteredJobs.length > 0 ? (
+          filteredJobs.map((job) => (
+            <div key={job.id} className="p-6 bg-white/5 border border-white/10 rounded-3xl hover:bg-white/[0.08] hover:border-[#75C9B7]/30 transition-all duration-300">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-[9px] font-black text-[#FF5722] bg-[#FF5722]/10 px-2 py-0.5 rounded-full uppercase tracking-widest">
+                      {job.tag}
+                    </span>
+                    {/* Shows the date for each job */}
+                    <span className="text-[9px] text-gray-600 font-bold uppercase">{job.date}</span>
+                  </div>
+                  <h3 className="text-xl font-bold mt-1 text-white group-hover:text-[#75C9B7] transition-colors">{job.title}</h3>
+                  <p className="text-gray-500 text-sm mt-1">{job.org} • 📍 {job.loc}</p>
+                </div>
+                <button 
+                  onClick={() => handleApply(job.link)}
+                  className="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-[#E91E63] to-[#FF5722] rounded-xl font-black text-[10px] uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg shadow-pink-500/20"
+                >
+                  APPLY NOW
+                </button>
               </div>
-              <button 
-                onClick={() => handleApply(job.link)}
-                className="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-[#E91E63] to-[#FF5722] rounded-xl font-bold text-xs"
-              >
-                APPLY
-              </button>
             </div>
+          ))
+        ) : (
+          <div className="text-center py-20 bg-white/5 rounded-3xl border border-dashed border-white/10">
+            <p className="text-gray-500 italic">No opportunities currently listed under this category.</p>
           </div>
-        ))}
+        )}
       </div>
     </main>
   );

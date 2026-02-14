@@ -38,8 +38,7 @@ export default function RootLayout({
             </a>
             <div className="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest">
               <a href="/news" className="hover:text-[#FF5722] transition">News</a>
-              <a href="/niseca" className="hover:text-[#75C9B7] transition">Agric AI</a>
-              <a href="/vet" className="hover:text-[#75C9B7] transition">Vet</a>
+              <a href="/lab" className="hover:text-[#75C9B7] transition">Innovation Lab</a> {/* Updated */}
               <a href="/jobs" className="hover:text-[#FF5722] transition">Jobs</a>
               <a href="/foundation" className="hover:text-[#E91E63] transition text-[#E91E63]">Foundation</a>
               <a href="/team" className="hover:text-gray-400 transition">Team</a>
