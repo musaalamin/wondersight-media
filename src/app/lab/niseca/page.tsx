@@ -71,7 +71,7 @@ export default function NisecaLab() {
   const detectLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((pos) => {
-        fetchAgData(pos.coords.latitude, pos.coords.longitude, lang === 'EN' ? "Current Coordinates" : "Inda kake yanzu");
+        fetchAgData(pos.coords.latitude, pos.coords.longitude, lang === 'EN' ? "GPS Accurate" : "Inda kake yanzu");
       });
     }
   };
