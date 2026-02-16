@@ -48,7 +48,7 @@ export default function CategoryClient({ category }: { category: string }) {
           <div className="mt-10 max-w-xl">
             <input 
               type="text"
-              placeholder="Filter by keyword (e.g. Gusau, Policy)..."
+              placeholder="Filter by keyword (e.g. Abuja, Policy)..."
               className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:border-[#75C9B7] outline-none transition-all"
               onChange={(e) => setSearchQuery(e.target.value)}
             />

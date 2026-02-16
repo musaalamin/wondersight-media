@@ -155,7 +155,7 @@ export default function NewsroomPage() {
             Join the <span className="text-[#75C9B7]">Intelligence</span> Brief
           </h2>
           <p className="text-gray-400 mb-10 text-sm leading-relaxed">
-            Receive the latest investigative reports and instant job alerts in Gusau. No spam, just institutional clarity.
+            Receive the latest investigative reports and instant job alerts around the world. No spam, just institutional clarity.
           </p>
           <form className="flex flex-col md:flex-row gap-4" onSubmit={(e) => e.preventDefault()}>
             <input 
