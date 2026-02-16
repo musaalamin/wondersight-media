@@ -43,7 +43,7 @@ export default function JobsPage() {
     <main className="min-h-screen bg-[#120B21] text-white p-6">
       <header className="max-w-4xl mx-auto mb-12">
         <h1 className="text-4xl font-black text-[#75C9B7] mb-2 tracking-tighter uppercase">Job Board</h1>
-        <p className="text-gray-400">Powered by Wonder Sight Lab Intelligence</p>
+        <p className="text-gray-400">Powered by WS Intelligence</p>
       </header>
 
       <div className="max-w-4xl mx-auto mb-10">

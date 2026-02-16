@@ -20,14 +20,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <head>
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9706843263138053"
-          crossOrigin="anonymous"
-          strategy="afterInteractive" 
-        />
-      </head>
+      {/* Note: Next.js automatically injects Metadata into the head. 
+          We place the Master AdSense Script here for site-wide approval.
+      */}
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9706843263138053"
+        crossOrigin="anonymous"
+        strategy="afterInteractive" 
+      />
+      
       <body className={`${inter.className} bg-[#120B21] text-white antialiased`}>
         
         {/* NAVIGATION */}
@@ -80,7 +82,6 @@ export default function RootLayout({
               </p>
             </div>
 
-            {/* SOCIAL MEDIA HUB */}
             <div className="flex flex-col gap-4">
               <p className="text-white font-black text-[10px] uppercase tracking-widest">Connect With Us</p>
               <div className="flex flex-wrap gap-4 text-gray-500 text-[10px] font-bold uppercase tracking-tighter">

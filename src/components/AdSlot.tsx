@@ -7,39 +7,38 @@ interface AdSlotProps {
   label?: string;
 }
 
-export default function AdSlot({ id, scriptSrc, label = "Sponsored Content" }: AdSlotProps) {
+export default function AdSlot({ id, scriptSrc, label = "Institutional Supporter" }: AdSlotProps) {
   const adRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (adRef.current) {
-      adRef.current.innerHTML = '';
+      // 1. Clear previous content to avoid duplicate ads
+      adRef.current.innerHTML = ''; 
+      
+      // 2. Create the script element
       const script = document.createElement('script');
       script.src = scriptSrc;
       script.type = 'text/javascript';
       script.async = true;
-      
-      // Error handling: if script fails to load
-      script.onerror = () => {
-        if (adRef.current) adRef.current.style.display = 'none';
-      };
 
+      // 3. Inject it into the div
       adRef.current.appendChild(script);
     }
-  }, [scriptSrc, id]); // Re-run if ID or Source changes
+  }, [scriptSrc, id]);
 
   return (
-    <div className="w-full my-8 flex flex-col items-center">
-      <span className="text-[9px] font-black uppercase tracking-[0.3em] text-gray-800 mb-4">
+    <div className="w-full my-12 flex flex-col items-center">
+      <span className="text-[9px] font-black uppercase tracking-[0.3em] text-gray-600 mb-4">
         {label}
       </span>
       
+      {/* ⚠️ THE FIX IS HERE: Change 'atcontainer-' to 'container-' */}
       <div 
         ref={adRef}
-        key={scriptSrc} // This forces a full refresh of the ad unit
-        id={`atcontainer-${id}`} 
-        className="w-full max-w-[728px] min-h-[90px] flex justify-center items-center bg-white/[0.01] rounded-xl overflow-hidden"
+        id={`container-${id}`} 
+        className="w-full max-w-5xl min-h-[90px] flex justify-center items-center bg-white/[0.01] rounded-xl overflow-hidden"
       >
-        {/* Ad will load here */}
+        {/* Adsterra will look for the ID 'container-d672...' and place the ad here */}
       </div>
     </div>
   );
