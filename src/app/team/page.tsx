@@ -3,7 +3,7 @@ import React from 'react';
 const teamMembers = [
   {
     name: "Khaliferh Musa Al-Amin",
-    role: "Founder / CVO",
+    role: "Founder / CVTO",
     image: "/team/khalifa.webp",
     bio: "Founder and Chief Vision Officer of Wonder Sight Group. He leads the transition into Solution Journalism and AI-driven agriculture in Northern Nigeria.",
     link: "https://www.linkedin.com/in/khaliferh-musa-4979341a7" 
@@ -23,12 +23,20 @@ const teamMembers = [
     link: "https://www.linkedin.com/in/jimeh-saleh-a20992202" 
   },
 {
+    name: "Ibrahim Tukur",
+    role: "On Air Personal",
+    image: "/team/ibrahim.webp",
+    bio: "Ibrahim Tukur is an accomplished On-Air Personality and Director of News at Shamuwa Global FM, recognized for his unwavering commitment to professional journalism ethics, accuracy, and responsible digital reporting.",
+    link: "https://www.facebook.com/share/1CBEuWqkNY/?mibextid=wwXIfr" 
+  },
+{
     name: "Buhari Morikie",
-    role: "Senior Investigator",
+    role: "Community Developer",
     image: "/team/buhari.webp",
-    bio: "Buhari is a humanitarian activist and community development advocate committed to promoting good governance and social accountability. Their work focuses on empowering underserved communities, strengthening civic participation, and advancing sustainable development initiatives. Through grassroots engagement and policy advocacy, they support efforts that foster transparency, resilience, and inclusive growth.",
+    bio: "Buhari is a humanitarian activist and community development advocate committed to promoting good governance and social accountability. Their work focuses on empowering underserved communities, strengthening civic participation, and advancing sustainable development initiatives. Through grassroots engagement and policy advocacy.",
     link: "https://www.facebook.com/buhari.morikie" 
   },
+
   {
     name: "Muhammad Bello",
     role: "Creative Director",
