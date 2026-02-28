@@ -8,19 +8,32 @@ export const postType = defineType({
     defineField({name: 'title', type: 'string'}),
     defineField({name: 'slug', type: 'slug', options: {source: 'title'}}),
     
-    // 1. This is your Header/Cover Image
+    // 1. Header/Cover Image
     defineField({
       name: 'mainImage',
       title: 'Main Image (Cover)',
       type: 'image',
       options: { hotspot: true },
-      fields: [
+      fields: [{ name: 'alt', type: 'string', title: 'Alt Text' }]
+    }),
+
+    // 2. NEW: Article Gallery (Max 3 supporting images)
+    defineField({
+      name: 'gallery',
+      title: 'Supporting Gallery',
+      type: 'array',
+      description: 'Add up to 3 additional images for this report.',
+      of: [
         {
-          name: 'alt',
-          type: 'string',
-          title: 'Alternative Text',
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            { name: 'alt', type: 'string', title: 'Alt Text' },
+            { name: 'caption', type: 'string', title: 'Caption' }
+          ]
         }
-      ]
+      ],
+      validation: Rule => Rule.max(3).error('Max 3 gallery images allowed.')
     }),
 
     defineField({name: 'date', type: 'date'}),
@@ -29,36 +42,27 @@ export const postType = defineType({
     defineField({
       name: 'category',
       type: 'string',
-      options: { list: [
-      // We change the label but keep the value consistent for the URL
-      { title: 'Governance & Security', value: 'governance-security' },
-      { title: 'Agriculture', value: 'agriculture' },
-      { title: 'Youth', value: 'youth' }
-    ] }
+      options: { 
+        list: [
+          { title: 'Governance & Security', value: 'governance-security' },
+          { title: 'Agriculture', value: 'agriculture' },
+          { title: 'Youth', value: 'youth' }
+        ] 
+      }
     }),
 
-    // 2. This is the "Full Content" section you were asking about
-    // We REPLACE the old simple content field with this one:
     defineField({
       name: 'content',
       title: 'Full Content',
       type: 'array',
       of: [
-        { type: 'block' }, // This allows normal text paragraphs
+        { type: 'block' }, 
         { 
-          type: 'image',   // This allows images INSIDE the text body
+          type: 'image',
           options: { hotspot: true },
           fields: [
-            {
-              name: 'alt',
-              type: 'string',
-              title: 'Alternative Text',
-            },
-            {
-              name: 'caption',
-              type: 'string',
-              title: 'Caption',
-            }
+            { name: 'alt', type: 'string', title: 'Alt Text' },
+            { name: 'caption', type: 'string', title: 'Caption' }
           ]
         }
       ]
